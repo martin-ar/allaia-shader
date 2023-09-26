@@ -11,10 +11,9 @@ const frag = `
   uniform sampler2D iImage0;
   uniform sampler2D iImage1;
   uniform sampler2D iImage2;
-  //changer par blob position
   uniform vec2 iMouse;
   uniform float iTime;
-  //changer par blob surface
+  uniform float iSurface;
   uniform vec2 iDelta;
   
   ${ snoise3D }
@@ -41,7 +40,7 @@ const frag = `
     vec4 dimg = noiseImage(uv, 1., 5.9, 1., trans);
 
 //displacement parameters
-    vec2 duv = displace(uv, dimg.rb, 1., .02);
+    vec2 duv = displace(uv, dimg.rb, 1., iSurface);
     duv = mirror(duv, 1.);
     
     vec4 img0 = texture2D(iImage0, duv);
