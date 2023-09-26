@@ -89,7 +89,7 @@ function draw() {
   theShader.setUniform('iTime', frameCount);
   theShader.setUniform('iDelta', [deltaX, deltaY]);
 
-  WebGL.rect(0, 0, width, height);
+  WebGL.rect(0, 0, img0.width, img0.height);
   image(WebGL, 0, 0);
   // Border("#FFFFFF", 10);
   rSum = getCentroid();
@@ -184,32 +184,24 @@ function keyPressed() {
     img0 = loadImage("data/bn.png");
     img1 = loadImage("data/bn.png");
     img2 = loadImage("data/bn.png");
-    WebGL = createGraphics(img0.width, img0.height, WEBGL);
-    Canvas = createGraphics(img0.width, img0.height);
   }
 
   if (key === "2" || key === "é") {
     img0 = loadImage("data/color.png");
     img1 = loadImage("data/color.png");
     img2 = loadImage("data/color.png");
-    WebGL = createGraphics(img0.width, img0.height, WEBGL);
-    Canvas = createGraphics(img0.width, img0.height);
   }
 
   if (key === "3" || key === '"') {
     img0 = loadImage("data/A1.png");
     img1 = loadImage("data/A1.png");
     img2 = loadImage("data/A1.png");
-    WebGL = createGraphics(img0.width, img0.height, WEBGL);
-    Canvas = createGraphics(img0.width, img0.height);
   }
 
   if (key === "4" || key === "'") {
     img0 = loadImage("data/A2.png");
     img1 = loadImage("data/A2.png");
     img2 = loadImage("data/A2.png");
-    WebGL = createGraphics(img0.width, img0.height, WEBGL);
-    Canvas = createGraphics(img0.width, img0.height);
   }
 
   if (key === "S" || key === "s") {
