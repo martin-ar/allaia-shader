@@ -80,7 +80,7 @@ function draw() {
 
   WebGL.shader(theShader);
 
-  theShader.setUniform('iResolution', [width, height]);
+  theShader.setUniform('iResolution', [img0.width, img0.height]);
   theShader.setUniform('iPixelDensity', pixelDensity());
   theShader.setUniform('iCanvas', Canvas);
   theShader.setUniform('iImage0', img0);
