@@ -4,13 +4,17 @@ let WebGL;
 let Canvas;
 let img0, img1, img2;
 let deltaX = 0,
-  deltaY = 0;
+    deltaY = 0;
 
 var capture, previous, diff;
 
 var thresh = 30;
 var camerax = 128;
 var cameray = 72;
+
+let cWidth;
+let cHeight;
+let deltaCenter = 0;
 
 //centroid
 var cx;
@@ -28,16 +32,20 @@ let showCentroid = false;
 
 function preload() {
   theShader = new p5.Shader(this.renderer, vert, frag);
-  img0 = loadImage("data/bn.png");
-  img1 = loadImage("data/bn.png");
-  img2 = loadImage("data/bn.png");
+  img0 = loadImage("data/A1.png");
+  img1 = loadImage("data/A1.png");
+  img2 = loadImage("data/A1.png");
 }
 
 function setup() {
   fullscreen();
+  cWidth = windowHeight*0.707;
+  cHeight = windowHeight;
+  // Canvas = createCanvas(windowWidth, windowHeight);
+  Canvas = createCanvas(cWidth, cHeight);
   pixelDensity(1);
-  Canvas = createCanvas(windowWidth, windowHeight);
-  WebGL = createGraphics(width, height, WEBGL);
+  WebGL = createGraphics(cWidth, cHeight, WEBGL);
+  // WebGL = createGraphics(width, height, WEBGL);
   // Canvas = createGraphics(width, height);
   noStroke();
   background(51);
@@ -62,8 +70,8 @@ function setup() {
   previous = createImage(camerax, cameray); // create an empty picture
   diff = createImage(camerax, cameray); // create an empty picture
 
-  cx = 0;
-  cy = 0;
+  cx = 500;
+  cy = 500;
 
   cxx = 500;
   cyy = 500;
@@ -75,22 +83,24 @@ function draw() {
   deltaX += map(cxx, width, 0, deltaRatio, -deltaRatio);
   deltaY += map(cyy, 0, height, deltaRatio, -deltaRatio);
 
+  deltaCenter = map(Math.abs((cWidth/2) - cxx),0,1200,0.00000001,0.15);
   // deltaX += map(mouseX, 0, width, 0.005, -0.005);
   // deltaY += map(mouseY, 0, height, 0.005, -0.005);
 
   WebGL.shader(theShader);
 
-  theShader.setUniform('iResolution', [img0.width, img0.height]);
+  theShader.setUniform('iResolution', [cWidth, cHeight]);
   theShader.setUniform('iPixelDensity', pixelDensity());
   theShader.setUniform('iCanvas', Canvas);
   theShader.setUniform('iImage0', img0);
   theShader.setUniform('iImage1', img1);
   theShader.setUniform('iImage2', img2);
   theShader.setUniform('iMouse', [cxx, cyy]);
+  theShader.setUniform('iSurface',deltaCenter);
   theShader.setUniform('iTime', frameCount);
   theShader.setUniform('iDelta', [deltaX, deltaY]);
 
-  WebGL.rect(0, 0, width, height);
+  WebGL.rect(0, 0, cWidth, cHeight);
   image(WebGL, 0, 0);
   // Border("#FFFFFF", 10);
   rSum = getCentroid();
@@ -160,19 +170,20 @@ function getCentroid() {
   //image(capture, 0, 0, width/2, height/2);
   //image(diff, 0, 0, width, height);
   if (rsum > 32) {
-    cxx = map(cx, 0, capture.width, width, 0);
-    cyy = map(cy, 0, capture.height, 0, height);
+    cxx = map(cx, 0, capture.width, cWidth, 0);
+    cyy = map(cy, 0, capture.height, 0, cHeight);
   } 
-  else  {
-    cxx > width/2 ? cxx -= width*chillingFactor : cxx += width*chillingFactor;
-    cyy > height/2 ? cyy -= height*chillingFactor : cyy += height*chillingFactor;
-  }
+  // else  {
+  //   cxx > width/2 ? cxx -= width*chillingFactor : cxx += width*chillingFactor;
+  //   cyy > height/2 ? cyy -= height*chillingFactor : cyy += height*chillingFactor;
+  // }
 
   if (showCentroid){
     background (127,0.5);
     fill(255, 0, 0);
     ellipse(cxx, cyy, 16, 16);
-  }  
+  }
+  // console.log(Math.abs((width/2) - cxx) + " " + deltaCenter);
   return rsum;
 }
 
@@ -181,25 +192,14 @@ function keyPressed() {
   //   let fs = fullscreen();
   //   fullscreen(!fs);
   // }
-  if (key === "1" || key === "&") {
-    img0 = loadImage("data/bn.png");
-    img1 = loadImage("data/bn.png");
-    img2 = loadImage("data/bn.png");
-  }
 
-  if (key === "2" || key === "é") {
-    img0 = loadImage("data/color.png");
-    img1 = loadImage("data/color.png");
-    img2 = loadImage("data/color.png");
-  }
-
-  if (key === "3" || key === '"') {
+  if (key === "1" || key === '&') {
     img0 = loadImage("data/A1.png");
     img1 = loadImage("data/A1.png");
     img2 = loadImage("data/A1.png");
   }
 
-  if (key === "4" || key === "'") {
+  if (key === "2" || key === "é") {
     img0 = loadImage("data/A2.png");
     img1 = loadImage("data/A2.png");
     img2 = loadImage("data/A2.png");
