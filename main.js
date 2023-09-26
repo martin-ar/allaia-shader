@@ -70,7 +70,7 @@ function setup() {
 }
 
 function draw() {
-  deltaRatio = 0.005 * (map(rSum,0,400,1,8));
+  deltaRatio = 0.005 * (map(rSum, 0, 400, 1, 8));
   deltaX += map(cxx, width, 0, deltaRatio, -deltaRatio);
   deltaY += map(cyy, 0, height, deltaRatio, -deltaRatio);
 
@@ -161,17 +161,17 @@ function getCentroid() {
   if (rsum > 32) {
     cxx = map(cx, 0, capture.width, width, 0);
     cyy = map(cy, 0, capture.height, 0, height);
-  } 
-  else  {
-    cxx > width/2 ? cxx -= width*chillingFactor : cxx += width*chillingFactor;
-    cyy > height/2 ? cyy -= height*chillingFactor : cyy += height*chillingFactor;
+  }
+  else {
+    cxx > width / 2 ? cxx -= width * chillingFactor : cxx += width * chillingFactor;
+    cyy > height / 2 ? cyy -= height * chillingFactor : cyy += height * chillingFactor;
   }
 
-  if (showCentroid){
-    background (127,0.5);
+  if (showCentroid) {
+    background(127, 0.5);
     fill(255, 0, 0);
     ellipse(cxx, cyy, 16, 16);
-  }  
+  }
   return rsum;
 }
 
@@ -184,24 +184,32 @@ function keyPressed() {
     img0 = loadImage("data/bn.png");
     img1 = loadImage("data/bn.png");
     img2 = loadImage("data/bn.png");
+    WebGL = createGraphics(img0.width, img0.height, WEBGL);
+    Canvas = createGraphics(img0.width, img0.height);
   }
 
   if (key === "2" || key === "é") {
     img0 = loadImage("data/color.png");
     img1 = loadImage("data/color.png");
     img2 = loadImage("data/color.png");
+    WebGL = createGraphics(img0.width, img0.height, WEBGL);
+    Canvas = createGraphics(img0.width, img0.height);
   }
 
   if (key === "3" || key === '"') {
     img0 = loadImage("data/A1.png");
     img1 = loadImage("data/A1.png");
     img2 = loadImage("data/A1.png");
+    WebGL = createGraphics(img0.width, img0.height, WEBGL);
+    Canvas = createGraphics(img0.width, img0.height);
   }
 
   if (key === "4" || key === "'") {
     img0 = loadImage("data/A2.png");
     img1 = loadImage("data/A2.png");
     img2 = loadImage("data/A2.png");
+    WebGL = createGraphics(img0.width, img0.height, WEBGL);
+    Canvas = createGraphics(img0.width, img0.height);
   }
 
   if (key === "S" || key === "s") {
