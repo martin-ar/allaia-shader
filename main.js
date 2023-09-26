@@ -35,10 +35,9 @@ function preload() {
 
 function setup() {
   fullscreen();
-  canvas = createCanvas(windowWidth, windowHeight);
   pixelDensity(1);
-  WebGL = createGraphics(width, height, WEBGL);
-  Canvas = createGraphics(width, height);
+  WebGL = createGraphics(img0.width, img0.height, WEBGL);
+  Canvas = createGraphics(img0.width, img0.height);
   noStroke();
   background(51);
 
